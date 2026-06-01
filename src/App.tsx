@@ -13,6 +13,7 @@ import { SemanticDiagramNode, SemanticConnection } from './components/Diagrams';
 import { ArchitectureScene, BiologyScene } from './components/Scenes';
 import { useSemanticSequence } from './hooks/useSemanticSequence';
 import { synthesizeSpeech, playPCM } from './lib/gemini';
+import { useCollisionManager } from './hooks/useCollisionManager';
 
 // Registry of scenes for cleaner dispatch
 const SceneRegistry: Record<string, React.FC<{ currentStep: number; meta?: any }>> = {
@@ -84,7 +85,7 @@ const RetentionTelemetry = ({ scene, elapsed, timer }: { scene: string, elapsed:
   const efficiency = Math.sin(timer * 2) * 10 + 85 + (scene === 'neural' ? 5 : 0);
   
   return (
-    <div className="absolute top-24 left-8 z-50 flex flex-col gap-2 font-mono text-[10px] text-brand-gold/60 uppercase tracking-tighter">
+    <div className="absolute top-24 left-8 z-50 flex flex-col gap-2 font-mono text-[10px] text-brand-gold/60 uppercase tracking-tighter collidable-element">
       <div className="bg-brand-space/40 backdrop-blur-sm p-3 border border-white/5 rounded-lg flex flex-col gap-1">
         <div className="flex justify-between gap-8">
           <span>Active Scene:</span>
@@ -123,6 +124,23 @@ export default function App() {
   const { currentStep, activeStep, elapsedInScene, timer, isPlaying, start, pause, reset, advance } = useSemanticSequence({
     script: SAMPLE_SCRIPT
   });
+
+  const { containerRef, forceRecalculate } = useCollisionManager('.collidable-element', 15);
+  const [debugActive, setDebugActive] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'd') {
+        setDebugActive(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  React.useEffect(() => {
+    forceRecalculate();
+  }, [currentStep, forceRecalculate]);
 
   const [isTransitioning, setIsTransitioning] = React.useState(false);
   const processedStepRef = React.useRef<number>(-1);
@@ -181,7 +199,7 @@ export default function App() {
   }, [isPlaying, currentStep, activeStep.text, advance]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-brand-space selection:bg-brand-gold/30">
+    <div className={`relative w-full h-screen overflow-hidden bg-brand-space selection:bg-brand-gold/30 ${debugActive ? 'debug-active' : ''}`} ref={containerRef}>
       {/* Background Overlays */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(242,201,76,0.05)_0%,transparent_70%)]" />
       <div className="absolute inset-0 grain-overlay opacity-30 pointer-events-none z-10" />
@@ -196,7 +214,7 @@ export default function App() {
       />
 
       {/* Controles de Reprodução */}
-      <div className="absolute bottom-8 right-8 z-50 flex items-center gap-4 bg-black/40 backdrop-blur-xl p-4 border border-white/10 rounded-2xl shadow-2xl">
+      <div className="absolute bottom-8 right-8 z-50 flex items-center gap-4 bg-black/40 backdrop-blur-xl p-4 border border-white/10 rounded-2xl shadow-2xl collidable-element">
         <button 
           onClick={reset}
           className="p-2 hover:bg-white/10 rounded-xl transition-colors text-white/60 hover:text-white"
@@ -224,7 +242,7 @@ export default function App() {
       <motion.div 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        className="absolute top-8 left-8 z-50 flex flex-col gap-1"
+        className="absolute top-8 left-8 z-50 flex flex-col gap-1 collidable-element"
       >
         <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md px-4 py-2 border border-white/10 rounded-full">
           <div className="w-2 h-2 rounded-full bg-brand-gold animate-pulse" />
@@ -323,6 +341,63 @@ export default function App() {
         <span className="ml-4 opacity-20">|</span>
         <span>Output: 60 FPS</span>
       </div>
+      {debugActive && (
+        <>
+          {/* Action-Safe Zone (93%) */}
+          <div style={{
+            position: 'absolute',
+            top: '3.5%',
+            left: '3.5%',
+            width: '93%',
+            height: '93%',
+            border: '1px dashed rgba(0, 242, 255, 0.3)',
+            pointerEvents: 'none',
+            boxSizing: 'border-box',
+            zIndex: 9999
+          }}>
+            <span style={{ 
+              position: 'absolute', 
+              top: '4px', 
+              left: '6px', 
+              fontSize: '8px', 
+              color: 'rgba(0, 242, 255, 0.5)', 
+              fontFamily: 'monospace',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              padding: '1px 4px',
+              borderRadius: '2px'
+            }}>
+              ACTION-SAFE (93%)
+            </span>
+          </div>
+
+          {/* Title-Safe Zone (90%) */}
+          <div style={{
+            position: 'absolute',
+            top: '5%',
+            left: '5%',
+            width: '90%',
+            height: '90%',
+            border: '1px dashed rgba(188, 19, 254, 0.3)',
+            pointerEvents: 'none',
+            boxSizing: 'border-box',
+            zIndex: 9999
+          }}>
+            <span style={{ 
+              position: 'absolute', 
+              bottom: '4px', 
+              right: '6px', 
+              fontSize: '8px', 
+              color: 'rgba(188, 19, 254, 0.5)', 
+              fontFamily: 'monospace',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              padding: '1px 4px',
+              borderRadius: '2px'
+            }}>
+              TITLE-SAFE (90%)
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 }
