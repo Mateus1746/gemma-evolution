@@ -14,3 +14,4 @@ graph.json
 graph.svg
 graph.graphml
 cypher.txt
+exports/
