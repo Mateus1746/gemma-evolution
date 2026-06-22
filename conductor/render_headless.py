@@ -8,48 +8,25 @@ def render_story(factory, scene_id):
     print(f"🎬 Iniciando Renderização Headless para {factory} / {scene_id}...")
     
     # 1. Definir caminhos
-    app_js_path = "web/app.js"
     wav_path = f"pipeline/sync_drive/audio_ready/{factory}/{scene_id}/{scene_id}.wav"
     output_path = f"pipeline/sync_drive/exports/{factory}_{scene_id}.mp4"
 
+    # Fallback para duração se o áudio não existir (para fins de desenvolvimento/teste)
     if not os.path.exists(wav_path):
-        print(f"❌ Erro: Áudio não encontrado em {wav_path}")
-        return False
+        print(f"⚠️ Alerta: Áudio não encontrado em {wav_path}. Usando duração padrão de 10s.")
+        duration_rounded = 10.0
+    else:
+        # 2. Obter duração do áudio
+        with contextlib.closing(wave.open(wav_path, 'r')) as f:
+            frames = f.getnframes()
+            rate = f.getframerate()
+            duration = frames / float(rate)
 
-    # 2. Obter duração do áudio
-    with contextlib.closing(wave.open(wav_path, 'r')) as f:
-        frames = f.getnframes()
-        rate = f.getframerate()
-        duration = frames / float(rate)
-    
-    # Adicionar uma pequena folga de segurança na duração
-    duration_rounded = round(duration + 0.2, 2)
-    print(f"⏱️ Duração do áudio detectada: {duration_rounded}s")
-
-    # 3. Ler o app.js original para fazer backup
-    with open(app_js_path, 'r', encoding='utf-8') as f:
-        original_content = f.read()
+        # Adicionar uma pequena folga de segurança na duração
+        duration_rounded = round(duration + 0.2, 2)
+        print(f"⏱️ Duração do áudio detectada: {duration_rounded}s")
 
     try:
-        # 4. Modificar app.js com os novos defaults
-        modified_content = original_content
-        # Substituir os fallbacks de factory e scene
-        modified_content = modified_content.replace(
-            "const factory = urlParams.get('factory') || 'politica_direita';",
-            f"const factory = urlParams.get('factory') || '{factory}';"
-        )
-        modified_content = modified_content.replace(
-            "const sceneId = urlParams.get('scene') || 'staging';",
-            f"const sceneId = urlParams.get('scene') || '{scene_id}';"
-        )
-        modified_content = modified_content.replace(
-            "const isRecording = urlParams.get('recording') === 'true';",
-            "const isRecording = urlParams.get('recording') === 'true' || urlParams.get('headless') === 'true';"
-        )
-
-        with open(app_js_path, 'w', encoding='utf-8') as f:
-            f.write(modified_content)
-        
         # 5. Compilar os assets web
         print("📦 Compilando assets do projeto (npm run build)...")
         subprocess.run(["npm", "run", "build"], check=True)
@@ -58,9 +35,10 @@ def render_story(factory, scene_id):
         print("🎥 Executando Engine-Headless-Recorder...")
         recorder_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../tools/Engine-Headless-Recorder/src/node/record_video.js"))
         
+        # O seletor foi unificado para #video-canvas
         cmd = [
             "node", recorder_path,
-            "--project=gemma-evolution/dist",
+            "--project=dist",
             "--canvas=#video-canvas",
             f"--duration={duration_rounded}",
             "--fps=25",
@@ -74,11 +52,7 @@ def render_story(factory, scene_id):
         return True
 
     finally:
-        # 7. Restaurar o app.js original
-        print("🧼 Restaurando o estado original de web/app.js...")
-        with open(app_js_path, 'w', encoding='utf-8') as f:
-            f.write(original_content)
-        subprocess.run(["npm", "run", "build"], check=True)
+        print("🧼 Pipeline concluída.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
