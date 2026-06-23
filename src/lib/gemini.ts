@@ -1,8 +1,8 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 
-export const ai = new GoogleGenAI({ 
-  apiKey: process.env.GEMINI_API_KEY 
-});
+export const ai = process.env.GEMINI_API_KEY
+  ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
+  : null;
 
 const CACHE_PREFIX = "gemma4_speech_cache_";
 
@@ -17,13 +17,13 @@ export async function synthesizeSpeech(text: string): Promise<string | undefined
     return cached;
   }
 
-  if (!process.env.GEMINI_API_KEY) {
+  if (!ai) {
     console.warn("GEMINI_API_KEY is not set. Falling back to browser TTS or silence.");
     return undefined;
   }
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await (ai as any).models.generateContent({
       model: "gemini-3.1-flash-tts-preview",
       contents: [{ parts: [{ text: `Diga de forma clara e profissional em português brasileiro: ${text}` }] }],
       config: {
