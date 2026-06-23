@@ -213,7 +213,7 @@ export default function App() {
 
   return (
     <div className={`relative w-full h-screen overflow-hidden bg-brand-space selection:bg-brand-gold/30 ${debugActive ? 'debug-active' : ''}`} ref={containerRef}>
-      <canvas id="video-canvas" style={{ display: 'none' }} width="1080" height="1080" />
+      <canvas id="video-canvas" width="1080" height="1080" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: -1, visibility: 'hidden' }} />
       {/* Background Overlays */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(242,201,76,0.05)_0%,transparent_70%)]" />
       <div className="absolute inset-0 grain-overlay opacity-30 pointer-events-none z-10" />
