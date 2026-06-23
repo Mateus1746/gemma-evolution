@@ -7,7 +7,17 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import { spawn } from 'node:child_process';
+import { spawn, execSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+const _require = createRequire(import.meta.url);
+let _ffmpegPath = 'ffmpeg'; // fallback para sistema
+try {
+  const ffmpegInstaller = _require('@ffmpeg-installer/ffmpeg');
+  _ffmpegPath = ffmpegInstaller.path;
+  console.log(`[FFMPEG] Usando binário embutido: ${_ffmpegPath}`);
+} catch {
+  console.log('[FFMPEG] Binário do sistema (fallback)');
+}
 import os from 'node:os';
 // Ler argumentos simples da linha de comando (ex: --project=olhos --duration=10)
 const args = {};
@@ -33,14 +43,14 @@ const BITRATE = args.bitrate || 6000000;
 // --mode=gpu  → usa WebCodecs (pipeline original, requer GPU)
 // CPU_RENDER=1 (env var) → força modo CPU
 const RENDER_MODE = args.mode || (process.env.CPU_RENDER === '1' ? 'cpu' : 'cpu');
-const CPU_WORKERS = parseInt(process.env.CPU_WORKERS) || 1;
+const CPU_WORKERS = Math.max(1, Math.min(os.cpus().length, 4)); // até 4 workers
 const CAPTURE_WIDTH  = Math.round((args.width  || 1280));
 const CAPTURE_HEIGHT = Math.round((args.height || 720));
 // ─────────────────────────────────────────────────────────────────────────────
 
 
 const PORT = 8080;
-const PROJECTS_BASE_DIR = path.resolve(__dirname, '../../../../'); // Pasta raiz contendo Engine-Headless-Recorder e nexus_media
+const PROJECTS_BASE_DIR = path.resolve(__dirname, '../../../'); // Pasta raiz contendo Engine-Headless-Recorder e nexus_media
 const OUTPUT_FILE_PATH = args.output 
   ? path.resolve(args.output) 
   : path.resolve(__dirname, `../../../nexus_media/video/${PROJECT_NAME}/genesis_final_SOTA.mp4`);
@@ -50,17 +60,10 @@ function startLocalServer() {
   const server = http.createServer((req, res) => {
     // Decodificar URL e remover parâmetros de consulta
     const urlPath = decodeURIComponent(req.url.split('?')[0]);
-    let filePath;
-    if (urlPath.startsWith('/tools/')) {
-        filePath = path.join(PROJECTS_BASE_DIR, urlPath.substring(1));
-    } else {
-        filePath = path.join(PROJECTS_BASE_DIR, PROJECT_NAME, urlPath);
-    }
-    console.log(`[SERVER DEBUG] Requested: ${req.url} -> Resolved: ${filePath}`);
+    const filePath = path.join(PROJECTS_BASE_DIR, urlPath);
 
     // Garantir proteção contra Path Traversal
     if (!filePath.startsWith(PROJECTS_BASE_DIR)) {
-      console.log(`[SERVER DEBUG] Path traversal blocked: ${filePath} doesn't start with ${PROJECTS_BASE_DIR}`);
       res.statusCode = 403;
       res.end('Forbidden');
       return;
@@ -149,6 +152,16 @@ async function recordCPU() {
   const server = await startLocalServer();
   let browser;
 
+  // Garantir que os assets Vite estão compilados antes de iniciar o browser
+  try {
+    const projectRoot = path.resolve(__dirname, '../../../..');
+    console.log('[CPU-RECORDER] Executando npm run build para compilar assets Vite...');
+    execSync('npm run build', { cwd: projectRoot, stdio: 'inherit', timeout: 120000 });
+    console.log('[CPU-RECORDER] Build concluído.');
+  } catch (buildErr) {
+    console.warn(`[CPU-RECORDER] Build falhou (continuando mesmo assim): ${buildErr.message}`);
+  }
+
   try {
     console.log(`[CPU-RECORDER] Iniciando modo CPU com ${CPU_WORKERS} workers paralelos`);
     console.log(`[CPU-RECORDER] Resolução de captura: ${CAPTURE_WIDTH}x${CAPTURE_HEIGHT} → upscale 1920x1080`);
@@ -156,7 +169,6 @@ async function recordCPU() {
 
     browser = await puppeteer.launch({
       headless: 'new',
-      protocolTimeout: 240000,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
@@ -216,7 +228,7 @@ async function recordCPU() {
         OUTPUT_FILE_PATH
       ];
 
-      const ffmpeg = spawn('ffmpeg', ffmpegArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
+      const ffmpeg = spawn(_ffmpegPath, ffmpegArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
       ffmpeg.on('error', err => reject(new Error(`FFmpeg não encontrado: ${err.message}. Instale com: apt-get install ffmpeg`)));
       ffmpeg.on('close', code => {
         if (code === 0) resolve();
@@ -279,7 +291,7 @@ async function record() {
     page.on('pageerror', err => console.error(`[BROWSER ERROR] ${err.toString()}`));
 
     // Abrir a fábrica web correspondente usando o servidor local
-    const projectUrl = `http://127.0.0.1:${PORT}/index.html?headless=true`;
+    const projectUrl = `http://127.0.0.1:${PORT}/nexus_media/video/${PROJECT_NAME}/index.html?headless=true`;
     console.log(`[RECORDER] Navegando para ${projectUrl}`);
     await page.goto(projectUrl, { waitUntil: 'networkidle0' });
 
@@ -289,7 +301,7 @@ async function record() {
 
     // 1. Injetar o CoreRecorder dinamicamente na página
     console.log(`[RECORDER] Injetando gravador na página...`);
-  await page.addScriptTag({ url: `http://127.0.0.1:${PORT}/tools/Engine-Headless-Recorder/src/browser/recorder-core.js` });
+    await page.addScriptTag({ url: `http://127.0.0.1:${PORT}/Engine-Headless-Recorder/src/browser/recorder-core.js` });
 
     // 2. Inicializar o gravador no contexto do browser
     console.log(`[RECORDER] Inicializando o CoreRecorder e abrindo fluxo fMP4 no OPFS...`);
@@ -310,17 +322,6 @@ async function record() {
     for (let i = 0; i < totalFrames; i++) {
       const timeMs = i * frameIntervalMs;
       
-      // Esperar o app estar pronto no primeiro frame
-      if (i === 0) {
-        await page.evaluate(async () => {
-           let attempts = 0;
-           while (!window.__appReady && attempts++ < 200) {
-              await new Promise(r => setTimeout(r, 100));
-           }
-           console.log(`[RECORDER] App ready after ${attempts} attempts`);
-        });
-      }
-
       // 3. Atualizar frame e gravar usando o buffer do Canvas
       await page.evaluate(async (t, canvasSelector) => {
         // Avança a simulação física/gráfica para o tempo t se implementado
@@ -330,13 +331,8 @@ async function record() {
           console.warn('[RECORDER BROWSER] Alerta: window.renderFrame não está definido. A gravação prosseguirá capturando o estado do canvas.');
         }
         // Codifica os pixels gráficos no encoder (usa seletor ou fallback de canvas genérico)
-        let canvas = document.querySelector(canvasSelector);
+        const canvas = document.querySelector(canvasSelector) || document.querySelector('canvas');
         if (!canvas) {
-           console.log('[RECORDER BROWSER] Tentando encontrar qualquer canvas no DOM...');
-           canvas = document.querySelector('canvas');
-        }
-        if (!canvas) {
-          console.log('[RECORDER BROWSER] DOM atual:', document.body.innerHTML);
           throw new Error(`[RECORDER BROWSER] Canvas não encontrado com o seletor: ${canvasSelector}`);
         }
         await window.recorder.recordFrame(canvas, t);
