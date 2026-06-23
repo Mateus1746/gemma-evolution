@@ -121,9 +121,22 @@ const RetentionTelemetry = ({ scene, elapsed, timer }: { scene: string, elapsed:
 };
 
 export default function App() {
-  const { currentStep, activeStep, elapsedInScene, timer, isPlaying, start, pause, reset, advance } = useSemanticSequence({
+  const urlParams = new URLSearchParams(window.location.search);
+  const sceneId = urlParams.get('scene');
+
+  // In a real scenario, we might fetch a different script based on sceneId
+  // For now, we use SAMPLE_SCRIPT but acknowledge the parameterization
+  const { currentStep, activeStep, elapsedInScene, timer, isPlaying, start, pause, reset, advance, seek } = useSemanticSequence({
     script: SAMPLE_SCRIPT
   });
+
+  useEffect(() => {
+    (window as any).renderFrame = async (timeMs: number) => {
+      seek(timeMs / 1000);
+    };
+    (window as any).__appReady = true;
+    console.log("Autonomous Execution API Initialized: window.renderFrame and window.__appReady are set.");
+  }, [seek]);
 
   const { containerRef, forceRecalculate } = useCollisionManager('.collidable-element', 15);
   const [debugActive, setDebugActive] = React.useState(false);
@@ -200,6 +213,7 @@ export default function App() {
 
   return (
     <div className={`relative w-full h-screen overflow-hidden bg-brand-space selection:bg-brand-gold/30 ${debugActive ? 'debug-active' : ''}`} ref={containerRef}>
+      <canvas id="video-canvas" style={{ display: 'none' }} width="1080" height="1080" />
       {/* Background Overlays */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(242,201,76,0.05)_0%,transparent_70%)]" />
       <div className="absolute inset-0 grain-overlay opacity-30 pointer-events-none z-10" />

@@ -49,8 +49,26 @@ export function useSemanticSequence({ script }: UseSemanticSequenceProps) {
   const reset = () => {
     setCurrentStep(0);
     setTimer(0);
-    setSceneStartTime(timer);
+    setSceneStartTime(0);
     setIsPlaying(false);
+  };
+
+  const seek = (time: number) => {
+    setTimer(time);
+
+    // Find appropriate step based on time
+    let stepIndex = 0;
+    for (let i = script.length - 1; i >= 0; i--) {
+      if (time >= script[i].time) {
+        stepIndex = i;
+        break;
+      }
+    }
+
+    if (stepIndex !== currentStep) {
+      setCurrentStep(stepIndex);
+    }
+    setSceneStartTime(script[stepIndex].time);
   };
 
   return {
@@ -62,6 +80,7 @@ export function useSemanticSequence({ script }: UseSemanticSequenceProps) {
     advance,
     start,
     pause,
-    reset
+    reset,
+    seek
   };
 }
