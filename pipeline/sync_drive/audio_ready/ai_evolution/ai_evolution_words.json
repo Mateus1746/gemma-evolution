@@ -1,0 +1,777 @@
+[
+  {
+    "word": "A",
+    "start": 0.0,
+    "end": 0.367
+  },
+  {
+    "word": "fascinante",
+    "start": 0.367,
+    "end": 0.734
+  },
+  {
+    "word": "jornada",
+    "start": 0.734,
+    "end": 1.1
+  },
+  {
+    "word": "dos",
+    "start": 1.1,
+    "end": 1.467
+  },
+  {
+    "word": "modelos",
+    "start": 1.467,
+    "end": 1.834
+  },
+  {
+    "word": "de",
+    "start": 1.834,
+    "end": 2.201
+  },
+  {
+    "word": "linguagem",
+    "start": 2.201,
+    "end": 2.567
+  },
+  {
+    "word": "modernos",
+    "start": 2.567,
+    "end": 2.934
+  },
+  {
+    "word": "começou",
+    "start": 2.934,
+    "end": 3.301
+  },
+  {
+    "word": "com",
+    "start": 3.301,
+    "end": 3.668
+  },
+  {
+    "word": "o",
+    "start": 3.668,
+    "end": 4.035
+  },
+  {
+    "word": "GPT-1",
+    "start": 4.035,
+    "end": 4.401
+  },
+  {
+    "word": "em",
+    "start": 4.401,
+    "end": 4.768
+  },
+  {
+    "word": "2018,",
+    "start": 4.768,
+    "end": 5.135
+  },
+  {
+    "word": "provando",
+    "start": 5.135,
+    "end": 5.502
+  },
+  {
+    "word": "que",
+    "start": 5.502,
+    "end": 5.868
+  },
+  {
+    "word": "o",
+    "start": 5.868,
+    "end": 6.235
+  },
+  {
+    "word": "pré-treinamento",
+    "start": 6.235,
+    "end": 6.602
+  },
+  {
+    "word": "generativo",
+    "start": 6.602,
+    "end": 6.969
+  },
+  {
+    "word": "em",
+    "start": 6.969,
+    "end": 7.335
+  },
+  {
+    "word": "larga",
+    "start": 7.335,
+    "end": 7.702
+  },
+  {
+    "word": "escala",
+    "start": 7.702,
+    "end": 8.069
+  },
+  {
+    "word": "era",
+    "start": 8.069,
+    "end": 8.436
+  },
+  {
+    "word": "o",
+    "start": 8.436,
+    "end": 8.803
+  },
+  {
+    "word": "caminho",
+    "start": 8.803,
+    "end": 9.169
+  },
+  {
+    "word": "definitivo",
+    "start": 9.169,
+    "end": 9.536
+  },
+  {
+    "word": "para",
+    "start": 9.536,
+    "end": 9.903
+  },
+  {
+    "word": "a",
+    "start": 9.903,
+    "end": 10.27
+  },
+  {
+    "word": "inteligência",
+    "start": 10.27,
+    "end": 10.636
+  },
+  {
+    "word": "artificial.",
+    "start": 10.636,
+    "end": 11.003
+  },
+  {
+    "word": "Logo",
+    "start": 11.003,
+    "end": 11.37
+  },
+  {
+    "word": "em",
+    "start": 11.37,
+    "end": 11.737
+  },
+  {
+    "word": "seguida,",
+    "start": 11.737,
+    "end": 12.104
+  },
+  {
+    "word": "o",
+    "start": 12.104,
+    "end": 12.47
+  },
+  {
+    "word": "GPT-2",
+    "start": 12.47,
+    "end": 12.837
+  },
+  {
+    "word": "e",
+    "start": 12.837,
+    "end": 13.204
+  },
+  {
+    "word": "o",
+    "start": 13.204,
+    "end": 13.571
+  },
+  {
+    "word": "GPT-3",
+    "start": 13.571,
+    "end": 13.937
+  },
+  {
+    "word": "elevaram",
+    "start": 13.937,
+    "end": 14.304
+  },
+  {
+    "word": "a",
+    "start": 14.304,
+    "end": 14.671
+  },
+  {
+    "word": "escala",
+    "start": 14.671,
+    "end": 15.038
+  },
+  {
+    "word": "para",
+    "start": 15.038,
+    "end": 15.405
+  },
+  {
+    "word": "bilhões",
+    "start": 15.405,
+    "end": 15.771
+  },
+  {
+    "word": "de",
+    "start": 15.771,
+    "end": 16.138
+  },
+  {
+    "word": "parâmetros,",
+    "start": 16.138,
+    "end": 16.505
+  },
+  {
+    "word": "surpreendendo",
+    "start": 16.505,
+    "end": 16.872
+  },
+  {
+    "word": "o",
+    "start": 16.872,
+    "end": 17.238
+  },
+  {
+    "word": "mundo",
+    "start": 17.238,
+    "end": 17.605
+  },
+  {
+    "word": "com",
+    "start": 17.605,
+    "end": 17.972
+  },
+  {
+    "word": "habilidades",
+    "start": 17.972,
+    "end": 18.339
+  },
+  {
+    "word": "emergentes",
+    "start": 18.339,
+    "end": 18.705
+  },
+  {
+    "word": "e",
+    "start": 18.705,
+    "end": 19.072
+  },
+  {
+    "word": "a",
+    "start": 19.072,
+    "end": 19.439
+  },
+  {
+    "word": "capacidade",
+    "start": 19.439,
+    "end": 19.806
+  },
+  {
+    "word": "de",
+    "start": 19.806,
+    "end": 20.173
+  },
+  {
+    "word": "aprender",
+    "start": 20.173,
+    "end": 20.539
+  },
+  {
+    "word": "novas",
+    "start": 20.539,
+    "end": 20.906
+  },
+  {
+    "word": "tarefas",
+    "start": 20.906,
+    "end": 21.273
+  },
+  {
+    "word": "com",
+    "start": 21.273,
+    "end": 21.64
+  },
+  {
+    "word": "pouquíssimos",
+    "start": 21.64,
+    "end": 22.006
+  },
+  {
+    "word": "exemplos.",
+    "start": 22.006,
+    "end": 22.373
+  },
+  {
+    "word": "Com",
+    "start": 22.373,
+    "end": 22.74
+  },
+  {
+    "word": "a",
+    "start": 22.74,
+    "end": 23.107
+  },
+  {
+    "word": "chegada",
+    "start": 23.107,
+    "end": 23.474
+  },
+  {
+    "word": "do",
+    "start": 23.474,
+    "end": 23.84
+  },
+  {
+    "word": "GPT-4,",
+    "start": 23.84,
+    "end": 24.207
+  },
+  {
+    "word": "entramos",
+    "start": 24.207,
+    "end": 24.574
+  },
+  {
+    "word": "em",
+    "start": 24.574,
+    "end": 24.941
+  },
+  {
+    "word": "uma",
+    "start": 24.941,
+    "end": 25.307
+  },
+  {
+    "word": "nova",
+    "start": 25.307,
+    "end": 25.674
+  },
+  {
+    "word": "era",
+    "start": 25.674,
+    "end": 26.041
+  },
+  {
+    "word": "de",
+    "start": 26.041,
+    "end": 26.408
+  },
+  {
+    "word": "multimodalidade",
+    "start": 26.408,
+    "end": 26.775
+  },
+  {
+    "word": "e",
+    "start": 26.775,
+    "end": 27.141
+  },
+  {
+    "word": "raciocínio",
+    "start": 27.141,
+    "end": 27.508
+  },
+  {
+    "word": "complexo,",
+    "start": 27.508,
+    "end": 27.875
+  },
+  {
+    "word": "onde",
+    "start": 27.875,
+    "end": 28.242
+  },
+  {
+    "word": "a",
+    "start": 28.242,
+    "end": 28.608
+  },
+  {
+    "word": "IA",
+    "start": 28.608,
+    "end": 28.975
+  },
+  {
+    "word": "passou",
+    "start": 28.975,
+    "end": 29.342
+  },
+  {
+    "word": "a",
+    "start": 29.342,
+    "end": 29.709
+  },
+  {
+    "word": "superar",
+    "start": 29.709,
+    "end": 30.075
+  },
+  {
+    "word": "barreiras",
+    "start": 30.075,
+    "end": 30.442
+  },
+  {
+    "word": "humanas",
+    "start": 30.442,
+    "end": 30.809
+  },
+  {
+    "word": "em",
+    "start": 30.809,
+    "end": 31.176
+  },
+  {
+    "word": "diversos",
+    "start": 31.176,
+    "end": 31.543
+  },
+  {
+    "word": "exames",
+    "start": 31.543,
+    "end": 31.909
+  },
+  {
+    "word": "acadêmicos",
+    "start": 31.909,
+    "end": 32.276
+  },
+  {
+    "word": "e",
+    "start": 32.276,
+    "end": 32.643
+  },
+  {
+    "word": "profissionais",
+    "start": 32.643,
+    "end": 33.01
+  },
+  {
+    "word": "de",
+    "start": 33.01,
+    "end": 33.376
+  },
+  {
+    "word": "alto",
+    "start": 33.376,
+    "end": 33.743
+  },
+  {
+    "word": "nível.",
+    "start": 33.743,
+    "end": 34.11
+  },
+  {
+    "word": "Mais",
+    "start": 34.11,
+    "end": 34.477
+  },
+  {
+    "word": "recentemente,",
+    "start": 34.477,
+    "end": 34.844
+  },
+  {
+    "word": "o",
+    "start": 34.844,
+    "end": 35.21
+  },
+  {
+    "word": "Gemini",
+    "start": 35.21,
+    "end": 35.577
+  },
+  {
+    "word": "Ultra",
+    "start": 35.577,
+    "end": 35.944
+  },
+  {
+    "word": "consolidou",
+    "start": 35.944,
+    "end": 36.311
+  },
+  {
+    "word": "a",
+    "start": 36.311,
+    "end": 36.677
+  },
+  {
+    "word": "performance",
+    "start": 36.677,
+    "end": 37.044
+  },
+  {
+    "word": "multimodal",
+    "start": 37.044,
+    "end": 37.411
+  },
+  {
+    "word": "nativa,",
+    "start": 37.411,
+    "end": 37.778
+  },
+  {
+    "word": "integrando",
+    "start": 37.778,
+    "end": 38.145
+  },
+  {
+    "word": "perfeitamente",
+    "start": 38.145,
+    "end": 38.511
+  },
+  {
+    "word": "visão,",
+    "start": 38.511,
+    "end": 38.878
+  },
+  {
+    "word": "áudio",
+    "start": 38.878,
+    "end": 39.245
+  },
+  {
+    "word": "e",
+    "start": 39.245,
+    "end": 39.612
+  },
+  {
+    "word": "texto",
+    "start": 39.612,
+    "end": 39.978
+  },
+  {
+    "word": "em",
+    "start": 39.978,
+    "end": 40.345
+  },
+  {
+    "word": "um",
+    "start": 40.345,
+    "end": 40.712
+  },
+  {
+    "word": "único",
+    "start": 40.712,
+    "end": 41.079
+  },
+  {
+    "word": "e",
+    "start": 41.079,
+    "end": 41.445
+  },
+  {
+    "word": "poderoso",
+    "start": 41.445,
+    "end": 41.812
+  },
+  {
+    "word": "motor",
+    "start": 41.812,
+    "end": 42.179
+  },
+  {
+    "word": "de",
+    "start": 42.179,
+    "end": 42.546
+  },
+  {
+    "word": "processamento.",
+    "start": 42.546,
+    "end": 42.913
+  },
+  {
+    "word": "Mas",
+    "start": 42.913,
+    "end": 43.279
+  },
+  {
+    "word": "o",
+    "start": 43.279,
+    "end": 43.646
+  },
+  {
+    "word": "que",
+    "start": 43.646,
+    "end": 44.013
+  },
+  {
+    "word": "vem",
+    "start": 44.013,
+    "end": 44.38
+  },
+  {
+    "word": "a",
+    "start": 44.38,
+    "end": 44.746
+  },
+  {
+    "word": "seguir?",
+    "start": 44.746,
+    "end": 45.113
+  },
+  {
+    "word": "A",
+    "start": 45.113,
+    "end": 45.48
+  },
+  {
+    "word": "evolução",
+    "start": 45.48,
+    "end": 45.847
+  },
+  {
+    "word": "agora",
+    "start": 45.847,
+    "end": 46.214
+  },
+  {
+    "word": "aponta",
+    "start": 46.214,
+    "end": 46.58
+  },
+  {
+    "word": "para",
+    "start": 46.58,
+    "end": 46.947
+  },
+  {
+    "word": "agentes",
+    "start": 46.947,
+    "end": 47.314
+  },
+  {
+    "word": "totalmente",
+    "start": 47.314,
+    "end": 47.681
+  },
+  {
+    "word": "autônomos,",
+    "start": 47.681,
+    "end": 48.047
+  },
+  {
+    "word": "raciocínio",
+    "start": 48.047,
+    "end": 48.414
+  },
+  {
+    "word": "sistêmico",
+    "start": 48.414,
+    "end": 48.781
+  },
+  {
+    "word": "profundo",
+    "start": 48.781,
+    "end": 49.148
+  },
+  {
+    "word": "e",
+    "start": 49.148,
+    "end": 49.515
+  },
+  {
+    "word": "modelos",
+    "start": 49.515,
+    "end": 49.881
+  },
+  {
+    "word": "que",
+    "start": 49.881,
+    "end": 50.248
+  },
+  {
+    "word": "aprendem",
+    "start": 50.248,
+    "end": 50.615
+  },
+  {
+    "word": "continuamente",
+    "start": 50.615,
+    "end": 50.982
+  },
+  {
+    "word": "através",
+    "start": 50.982,
+    "end": 51.348
+  },
+  {
+    "word": "da",
+    "start": 51.348,
+    "end": 51.715
+  },
+  {
+    "word": "interação",
+    "start": 51.715,
+    "end": 52.082
+  },
+  {
+    "word": "direta",
+    "start": 52.082,
+    "end": 52.449
+  },
+  {
+    "word": "com",
+    "start": 52.449,
+    "end": 52.815
+  },
+  {
+    "word": "o",
+    "start": 52.815,
+    "end": 53.182
+  },
+  {
+    "word": "mundo",
+    "start": 53.182,
+    "end": 53.549
+  },
+  {
+    "word": "real.",
+    "start": 53.549,
+    "end": 53.916
+  },
+  {
+    "word": "O",
+    "start": 53.916,
+    "end": 54.283
+  },
+  {
+    "word": "futuro",
+    "start": 54.283,
+    "end": 54.649
+  },
+  {
+    "word": "da",
+    "start": 54.649,
+    "end": 55.016
+  },
+  {
+    "word": "inteligência",
+    "start": 55.016,
+    "end": 55.383
+  },
+  {
+    "word": "artificial",
+    "start": 55.383,
+    "end": 55.75
+  },
+  {
+    "word": "está",
+    "start": 55.75,
+    "end": 56.116
+  },
+  {
+    "word": "apenas",
+    "start": 56.116,
+    "end": 56.483
+  },
+  {
+    "word": "começando.",
+    "start": 56.483,
+    "end": 56.85
+  }
+]
