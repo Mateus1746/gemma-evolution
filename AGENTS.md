@@ -10,6 +10,7 @@ Este projeto é uma vitrine técnica interativa do Gemma 4, utilizando React, Vi
 
 ## API de Renderização
 - `window.renderFrame(timeMs: number): Promise<void>` - Avança a animação para o tempo especificado (em milissegundos).
+- `window.initializeScene(): Promise<void>` - Inicializa a cena (wrapper no init existente).
 - `window.__appReady: boolean` - Torna-se `true` quando a cena está inicializada e pronta para gravação.
 
 ## Como Executar o Pipeline
@@ -23,7 +24,7 @@ Este projeto é uma vitrine técnica interativa do Gemma 4, utilizando React, Vi
    ```
 3. **Gravar Vídeo:**
    ```bash
-   node tools/Engine-Headless-Recorder/src/node/record_video.js --project=dist --canvas=#video-canvas --duration=35 --fps=25 --output=pipeline/sync_drive/exports/output.mp4
+   node tools/Engine-Headless-Recorder/src/node/record_video.js --canvas=#video-canvas --duration=35 --fps=25 --output=pipeline/sync_drive/exports/output.mp4
    ```
 
 ## Assets Estáticos
