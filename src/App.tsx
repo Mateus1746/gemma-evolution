@@ -135,6 +135,9 @@ export default function App() {
       seek(timeMs / 1000);
     };
     (window as any).__appReady = true;
+    (window as any).initializeScene = async function() {
+        // React handles initialization automatically via useEffect
+    };
     console.log("Autonomous Execution API Initialized: window.renderFrame and window.__appReady are set.");
   }, [seek]);
 
